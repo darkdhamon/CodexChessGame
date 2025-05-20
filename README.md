@@ -22,5 +22,6 @@ You can also run the game directly using Python:
 python -m chess_game.web_app
 ```
 
-Once started, open `http://localhost:5000` in your browser. Enter moves like `e2 e4` in the provided form.
+The web application automatically opens your default browser to `http://localhost:5000`.
+If it does not, open that address manually. Enter moves like `e2 e4` in the provided form.
 The web application requires the `flask` package to be installed.
