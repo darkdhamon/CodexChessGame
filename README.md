@@ -1,11 +1,11 @@
 # CodexChessGame
 
 A simple chess game for two players in hotseat mode. The project is written in Python using an MVC structure.
-By default the board is displayed in your web browser.
+The game now runs as a small web application so that you can play entirely from your browser.
 
 ## Running the game
 
-Use the launcher script for your operating system:
+Use the launcher script for your operating system to start the web server:
 
 - On Linux or macOS:
   ```sh
@@ -19,7 +19,8 @@ Use the launcher script for your operating system:
 You can also run the game directly using Python:
 
 ```sh
-python -m chess_game.game
+python -m chess_game.web_app
 ```
 
-During the game, players take turns entering moves in algebraic form, e.g. `e2 e4`. Type `quit` or `exit` to end the session.
+Once started, open `http://localhost:5000` in your browser. Enter moves like `e2 e4` in the provided form.
+The web application requires the `flask` package to be installed.
