@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional
+from typing import List, Optional
 
 from flask import Flask, request
 
@@ -14,6 +14,7 @@ class WebController:
     def __init__(self) -> None:
         self.board = Board()
         self.current_player = "white"
+        self.move_history: List[str] = []
         self.view = WebView()
         self.app = Flask(__name__)
         self._register_routes()
@@ -21,11 +22,20 @@ class WebController:
     def _register_routes(self) -> None:
         @self.app.route("/", methods=["GET"])
         def index() -> str:
-            return self.view.render(self.board, self.current_player)
+            return self.view.render(
+                self.board, self.current_player, move_history=self.move_history
+            )
 
         @self.app.route("/move", methods=["POST"])
         def move() -> str:
-            move_text = request.form.get("move", "")
+            data = request.get_json(silent=True)
+            if data:
+                start_text = data.get("start", "")
+                end_text = data.get("end", "")
+                move_text = f"{start_text} {end_text}"
+            else:
+                move_text = request.form.get("move", "")
+
             feedback = ""
             parsed_move = self._parse_move(move_text)
             if parsed_move is None:
@@ -41,10 +51,18 @@ class WebController:
                     feedback = "Invalid move."
                 else:
                     self.board.move_piece(start, end)
+                    self.move_history.append(
+                        f"{Board.coords_to_position(start)}-{Board.coords_to_position(end)}"
+                    )
                     self.current_player = (
                         "black" if self.current_player == "white" else "white"
                     )
-            return self.view.render(self.board, self.current_player, feedback)
+            return self.view.render(
+                self.board,
+                self.current_player,
+                feedback,
+                move_history=self.move_history,
+            )
 
     def _parse_move(self, user_input: str) -> Optional[tuple[tuple[int, int], tuple[int, int]]]:
         parts = user_input.strip().split()

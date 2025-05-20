@@ -30,6 +30,5 @@ Before running the game ensure the required Python packages are installed:
 pip install -r requirements.txt
 ```
 
-When using the Windows launcher this step is performed automatically.
-
-Once started, open `http://localhost:5000` in your browser. Enter moves like `e2 e4` in the provided form.
+Once started, open `http://localhost:5000` in your browser.
+Click on a piece and then a target square to make a move. The move history appears next to the board.
