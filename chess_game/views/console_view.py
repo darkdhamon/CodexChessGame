@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import os
 from ..models.board import Board
+from .base_view import BaseView
 
 
-class ConsoleView:
+class ConsoleView(BaseView):
     """Handles command-line interaction with the user."""
 
     WHITE_BACKGROUND = "\033[47m"
