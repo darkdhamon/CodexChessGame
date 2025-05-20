@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 from typing import List, Optional
+from pathlib import Path
 
 from flask import Flask, request
 
 from ..models.board import Board
 from ..views.web_view import WebView
+from ..models.chess_set_manager import ChessSetManager
 
 
 class WebController:
@@ -15,15 +17,27 @@ class WebController:
         self.board = Board()
         self.current_player = "white"
         self.move_history: List[str] = []
-        self.view = WebView()
-        self.app = Flask(__name__)
+        assets_path = Path(__file__).resolve().parent.parent / "assets"
+        self.chess_set_manager = ChessSetManager(assets_path)
+        default_set = (
+            self.chess_set_manager.available_sets[0]
+            if self.chess_set_manager.available_sets
+            else ""
+        )
+        self.current_set = default_set
+        self.view = WebView(self.chess_set_manager)
+        self.app = Flask(__name__, static_folder=str(assets_path))
         self._register_routes()
 
     def _register_routes(self) -> None:
         @self.app.route("/", methods=["GET"])
         def index() -> str:
             return self.view.render(
-                self.board, self.current_player, move_history=self.move_history
+                self.board,
+                self.current_player,
+                self.current_set,
+                self.chess_set_manager.available_sets,
+                move_history=self.move_history,
             )
 
         @self.app.route("/move", methods=["POST"])
@@ -60,7 +74,22 @@ class WebController:
             return self.view.render(
                 self.board,
                 self.current_player,
+                self.current_set,
+                self.chess_set_manager.available_sets,
                 feedback,
+                move_history=self.move_history,
+            )
+
+        @self.app.route("/set", methods=["POST"])
+        def set_chess_set() -> str:
+            chosen_set = request.form.get("set", "")
+            if chosen_set in self.chess_set_manager.available_sets:
+                self.current_set = chosen_set
+            return self.view.render(
+                self.board,
+                self.current_player,
+                self.current_set,
+                self.chess_set_manager.available_sets,
                 move_history=self.move_history,
             )
 

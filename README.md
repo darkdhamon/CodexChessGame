@@ -32,3 +32,4 @@ pip install -r requirements.txt
 
 Once started, open `http://localhost:5000` in your browser.
 Click on a piece and then a target square to make a move. The move history appears next to the board.
+You can switch between available chess sets using the dropdown above the board. Simply add a new folder under `chess_game/assets/ChessSets` following the same file naming scheme as the included **Staunton** set and it will be available in the dropdown.
