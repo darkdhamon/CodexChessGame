@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from .controllers.game_controller import GameController
-from .views.console_view import ConsoleView
+from .views.browser_view import BrowserView
 
 
 def main() -> None:
-    view = ConsoleView()
+    view = BrowserView()
     controller = GameController(view)
     controller.run()
 

@@ -1,6 +1,7 @@
 # CodexChessGame
 
-A simple command-line chess game for two players in hotseat mode. The project is written in Python using an MVC structure.
+A simple chess game for two players in hotseat mode. The project is written in Python using an MVC structure.
+By default the board is displayed in your web browser.
 
 ## Running the game
 

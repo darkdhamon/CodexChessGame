@@ -4,13 +4,13 @@ from typing import Optional
 
 from ..models.board import Board
 from ..models.piece import Piece
-from ..views.console_view import ConsoleView
+from ..views.base_view import BaseView
 
 
 class GameController:
     """Coordinates the interactions between view and model."""
 
-    def __init__(self, view: ConsoleView) -> None:
+    def __init__(self, view: BaseView) -> None:
         self.board = Board()
         self.view = view
         self.current_player = 'white'
