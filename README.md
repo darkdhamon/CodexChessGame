@@ -15,6 +15,8 @@ Use the launcher script for your operating system to start the web server:
   ```cmd
   launch_windows.bat
   ```
+  The Windows launcher will automatically install required Python packages if
+  they are missing.
 
 You can also run the game directly using Python:
 
@@ -22,5 +24,12 @@ You can also run the game directly using Python:
 python -m chess_game.web_app
 ```
 
+Before running the game ensure the required Python packages are installed:
+
+```sh
+pip install -r requirements.txt
+```
+
+When using the Windows launcher this step is performed automatically.
+
 Once started, open `http://localhost:5000` in your browser. Enter moves like `e2 e4` in the provided form.
-The web application requires the `flask` package to be installed.
